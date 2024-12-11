@@ -48,6 +48,16 @@ def traverse(i, j, data: np.ndarray):
             xmas_found += 1
     return xmas_found
 
+# Sorry
+def traverse2(i, j, data: np.ndarray):
+    if i >= 1 and i <= data.shape[0] - 2 and j >= 1 and j <= data.shape[1] - 2:
+        if ((data[i - 1, j - 1] == "M" and data[i + 1, j + 1] == "S") or
+                (data[i - 1, j - 1] == "S" and data[i + 1, j + 1] == "M")):
+            if ((data[i - 1, j + 1] == "M" and data[i + 1, j - 1] == "S") or
+                    (data[i - 1, j + 1] == "S" and data[i + 1, j - 1] == "M")):
+                return 1
+    return 0
+
 
 def question_one(data):
     total_xmas = 0
@@ -57,10 +67,19 @@ def question_one(data):
                 total_xmas += traverse(i, j, data)
     return total_xmas
 
+def question_two(data):
+    total_xmas = 0
+    for i, row in enumerate(data):
+        for j, char in enumerate(row):
+            if char == "A":
+                total_xmas += traverse2(i, j, data)
+    return total_xmas
+
 
 def main():
     data = read_input("input.txt")
     print(question_one(data))
+    print(question_two(data))
 
 
 if __name__ == "__main__":
